@@ -25,6 +25,7 @@ def main():
     con = tcd.console_new(screen_width, screen_height)
 
     game_map = GameMap(map_width, map_height)
+    game_map.make_map()
 
     key = tcd.Key()
     mouse = tcd.Mouse()

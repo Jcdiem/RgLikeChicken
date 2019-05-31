@@ -46,7 +46,8 @@ def main():
 
         if move:
             dx, dy = move
-            ply.move(dx,dy)
+            if not game_map.is_blocked(ply.x + dx, ply.y + dy):
+                ply.move(dx,dy)
 
         if exit:
             return True

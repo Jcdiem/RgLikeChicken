@@ -1,5 +1,6 @@
 from map_objects.tile import Tile
 from map_objects.rectangle import Rect
+from random import randint
 
 class GameMap:
     def __init__(self,width,height):
@@ -12,15 +13,32 @@ class GameMap:
 
         return tiles
 
-    def make_map(self):
-        # Create two rooms for testing purposes
-        room1 = Rect(20, 15, 10, 15)
-        room2 = Rect(35, 15, 10, 15)
+    def make_map(self, max_rooms, room_min_size, room_max_size, map_width, map_height, player):
+        rooms = []
+        num_rooms = 0
 
-        self.create_room(room1)
-        self.create_room(room2)
+        for r in range(max_rooms):
+            #randm width and height
+            w = randint(room_min_size, room_max_size) 
+            h = randint(room_min_size, room_max_size)
+            #Random pos (inside map boundries)
+            x = randint(0,map_width - w - 1)
+            y = randint(0,map_height - h - 1)
 
-        self.create_h_tunnel(25,40,23)
+            new_room = Rect(x,y,w,h)
+
+            for other_room in rooms:
+                if new_room.intersect(other_room): #room invald
+                    break
+            else: #room valid
+                self.create_room(new_room)
+                (new_x, new_y) = new_room.center
+
+                if num_rooms ==0:
+                    #Starting room
+                    player.x = new_x
+                    player.y = new_y
+
 
     def create_room(self, room):
         # go through the tiles in the room design and make them passable

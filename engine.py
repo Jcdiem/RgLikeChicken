@@ -5,18 +5,27 @@ from render_functions import clear_all, render_all
 from map_objects.game_map import GameMap
 
 def main():
+    #Screen stuff
     screen_width = 80
     screen_height = 50
+
+    #Map genration stuff
     map_width = 80
     map_height = 50
-
     room_max_size = 10
     room_min_size = 6
     max_rooms = 30
 
+    #FOV stuff
+    fov_algorithm = 0
+    fov_light_walls = True
+    fov_radius = 10
+
     colors = {
         'dark_wall': tcd.Color(0, 0, 100),
-        'dark_ground': tcd.Color(50, 50, 150)
+        'dark_ground': tcd.Color(50, 50, 150),
+        'light_wall': tcd.Color(130,110,50),
+        'light_ground': tcd.Color(200,100,50)
     }
 
     ply = Entity(int(screen_width / 2), int(screen_height / 2), '@', tcd.red)

@@ -32,13 +32,25 @@ class GameMap:
                     break
             else: #room valid
                 self.create_room(new_room)
-                (new_x, new_y) = new_room.center
+                (new_x, new_y) = new_room.center()
 
-                if num_rooms ==0:
-                    #Starting room
+                if num_rooms == 0: # if starting room
                     player.x = new_x
                     player.y = new_y
+                else: #If not first, connect to past room
+                    (prev_x, prev_y) = rooms[num_rooms-1].center()
 
+                    #50/50
+                    if randint(0, 1) == 1:
+                        #horiz then vert
+                        self.create_h_tunnel(prev_x,new_x,prev_y)
+                        self.create_v_tunnel(prev_y,new_y,prev_x)
+                    else:
+                        #vert then horiz
+                        self.create_v_tunnel(prev_y,new_y,prev_x)
+                        self.create_h_tunnel(prev_x,new_x,prev_y)
+                rooms.append(new_room)
+                num_rooms += 1
 
     def create_room(self, room):
         # go through the tiles in the room design and make them passable

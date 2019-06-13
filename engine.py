@@ -9,6 +9,9 @@ from render_functions import clear_all, render_all
 from map_objects.game_map import GameMap
 
 def main():
+    #System stuff
+    keySys = KeybindingSystem()
+
     #Screen stuff
     screen_width = 80
     screen_height = 50
@@ -75,7 +78,7 @@ def main():
         clear_all(con, entities)
 
 
-        action = handle_keys(key)
+        action = keySys.handleKeys(key)
 
         move = action.get('move')
         exit = action.get('exit')

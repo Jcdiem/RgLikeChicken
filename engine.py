@@ -1,7 +1,7 @@
 import tcod as tcd
-
+from components.ai import BasicMonster
 from components.fighter import Fighter
-from input_handling import handle_keys
+from input_handling import KeybindingSystem #TODO: FIX all things associated with handle_keys
 from entity import Entity, get_blocking_entities_at_location
 from game_states import GameStates
 from fov_functions import initialize_fov, recompute_fov
@@ -36,8 +36,8 @@ def main():
         'light_wall': tcd.Color(130,110,50),
         'light_ground': tcd.Color(200,100,50)
     }
-
-    ply = Entity(0, 0, '@', colors.get('player'), 'Player', blocks=True)
+    fightComp = Fighter(hp=30, defense=2, power=5)
+    ply = Entity(0, 0, '@', colors.get('player'), 'Player', blocks=True, fighter=fightComp)
     entities = [ply]
 
     tcd.console_set_custom_font('font.png', tcd.FONT_TYPE_GREYSCALE | tcd.FONT_LAYOUT_TCOD)
@@ -89,7 +89,7 @@ def main():
                 target = get_blocking_entities_at_location(entities, xDest, yDest)
 
                 if target:
-                    print('You kick the '+target.name+' in the shins, much to its annoyance')
+                    print('Yoinked.')
                 else:
                     ply.move(dx,dy)
 
@@ -105,8 +105,8 @@ def main():
 
         if game_state == GameStates.ENEMY_TURN:
             for entity in entities:
-                if entity != ply:
-                    print('The '+ entity.name+' stands completely still.')
+                if entity.ai:
+                    entity.ai.take_turn(ply, fov_map, game_map, entities)                    
 
             game_state = GameStates.PLAYERS_TURN
 

@@ -1,3 +1,5 @@
+import math
+
 class Entity:
     """
     A generic object to represent players, enemies, items, etc.
@@ -22,6 +24,24 @@ class Entity:
         # Moves the entity by a given amount
         self.x += dx
         self.y += dy
+
+    def distanceTo(self,target):
+        dx = target.x - self.x
+        dy = target.y - self.y
+        return math.sqrt(dx ** 2 + dy ** 2)
+
+    def moveTo(self, targetX, targetY, gameMap, entities):
+        dx = targetX - self.x
+        dy = targetY - self.y
+        distance = math.sqrt(dx ** 2 + dy ** 2)
+
+        dx = int(round(dx / distance))
+        dy = int(round(dy / distance))
+
+        if not(gameMap.is_blocked(self.x + dx, self.y + dy) or 
+        get_blocking_entities_at_location(entities, self.x + dx, self.y +dy)):
+            self.move(dx,dy)
+
 
 def get_blocking_entities_at_location(entities, destination_x, destination_y):
     for entity in entities:

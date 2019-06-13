@@ -1,4 +1,6 @@
 import tcod as tcd
+
+from components.fighter import Fighter
 from input_handling import handle_keys
 from entity import Entity, get_blocking_entities_at_location
 from game_states import GameStates

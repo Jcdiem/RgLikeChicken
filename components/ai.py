@@ -3,13 +3,18 @@ import tcod as tcd
 """
 Template monster for use in creating more intricate ones later
 """
-class BasicMonster:
+class BasicMonster: #Basic smashing smacky monster (phys attacks only)
     def take_turn(self, target, fovMap, gameMap, entities):
+        results = []
+
         monster = self.owner
         if tcd.map_is_in_fov(fovMap, monster.x, monster.y):
 
-            if monster.distanceTo(target) >= 2 and monster.distanceTo(target) <= 10:
-                monster.moveTo(target.x, target.y, gameMap, entities)
+            if monster.distanceTo(target) >= 2:
+                monster.move(target,entities,gameMap)
 
-            #elif (CONDITION):
-            #   stuff here you want to happen if the player is within distance of the enemy
+            elif target.fighter.cHealth > 0: #If within smacking range and has health
+                attack_results = monster.fighter.attack(target)
+                results.extend(attack_results)
+
+        return results

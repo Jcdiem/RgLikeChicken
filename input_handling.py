@@ -1,7 +1,7 @@
 import tcod as tcd
 class KeybindingSystem:
     def __init__(self):
-        self.keys=[
+        self.keys=[ #For characters only!
             'w', # 0 = Up
             's', # 1 = Down
             'a', # 2 = Left

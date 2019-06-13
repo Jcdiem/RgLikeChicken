@@ -87,11 +87,11 @@ class GameMap:
 
             if not any([entity for entity in entities if entity.x == x and entity.y == y]):
                 if randint(0, 100) < 80: #Make orc
-                    fightComp = Fighter(hp=10, defense=0, power=2)
+                    fightComp = Fighter(1,-7,0)
                     aiComp = BasicMonster()
                     monster = Entity(x, y, 'o', tcd.desaturated_green, 'Orc', blocks=True, fighter=fightComp, ai=aiComp)
                 else: #Make troll
-                    fightComp = Fighter(hp=16, defense=1, power=4)
+                    fightComp = Fighter(1,-4,1)
                     aiComp = BasicMonster()
                     monster = Entity(x, y, 'T', tcd.darker_green, 'Troll', blocks=True, fighter=fightComp, ai=aiComp)
 

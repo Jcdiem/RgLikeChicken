@@ -39,7 +39,7 @@ def main():
         'light_wall': tcd.Color(130,110,50),
         'light_ground': tcd.Color(200,100,50)
     }
-    fightComp = Fighter(hp=30, defense=2, power=5)
+    fightComp = Fighter(0,0,0,0,0,0)
     ply = Entity(0, 0, '@', colors.get('player'), 'Player', blocks=True, fighter=fightComp)
     entities = [ply]
 
@@ -92,7 +92,7 @@ def main():
                 target = get_blocking_entities_at_location(entities, xDest, yDest)
 
                 if target:
-                    print('Yoinked.')
+                    ply.fighter.physAttack(target)
                 else:
                     ply.move(dx,dy)
 
